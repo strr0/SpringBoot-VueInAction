@@ -11,7 +11,7 @@ import java.util.List;
 @Controller
 public class BookController {
     @GetMapping("/books")
-    public ModelAndView book() {
+    public ModelAndView books() {
         List<Book> bookList = new ArrayList<>();
         bookList.add(new Book(1, "三国演义", "罗贯中"));
         bookList.add(new Book(2, "红楼梦", "曹雪芹"));
