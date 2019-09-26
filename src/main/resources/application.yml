@@ -3,3 +3,15 @@ spring:
     static-path-pattern: /static/**
   resources:
     static-locations: classpath:/static/
+
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 0
+      max-file-size: 1MB
+      max-request-size: 10MB
+      location: ${user.dir}/out/production/resources/static/
+      resolve-lazily: false
+
+server:
+  port: 8081
