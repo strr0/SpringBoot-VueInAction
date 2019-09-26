@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+</head>
+<body>
+    <img id="preview" style="width: 200px;" />
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="uploadFile" value="请选择文件" onchange="imgPreview(this)" />
+        <input type="submit" value="上传" />
+    </form>
+
+    <script type="text/javascript">
+        function imgPreview(fileDom) {
+            if(window.FileReader) {
+                var reader = new FileReader();
+            }
+            else {
+                alert("设备不支持图片预览");
+            }
+            var file = fileDom.files[0];
+            var imgType = /^image\//;
+            if (!imgType.test(file.type)) {
+                alert("请选择图片");
+                return;
+            }
+            reader.onload = function (ev) {
+                var img = document.getElementById("preview");
+                img.src = this.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    </script>
+</body>
+</html>
