@@ -1,23 +1,22 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Book;
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@Controller
+@RestController
 public class BookController {
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
     @GetMapping("/books")
-    public ModelAndView books() {
-        List<Book> bookList = new ArrayList<>();
-        bookList.add(new Book(1, "三国演义", "罗贯中"));
-        bookList.add(new Book(2, "红楼梦", "曹雪芹"));
-        ModelAndView mv = new ModelAndView();
-        mv.addObject(bookList);
-        mv.setViewName("books");
-        return mv;
+    public String book() {
+        ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
+        //ops.set("name", "三国演义");
+        String name = ops.get("name");
+        System.out.println(name);
+        return "ok";
     }
 }
