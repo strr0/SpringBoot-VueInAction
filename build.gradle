@@ -15,5 +15,10 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-freemarker'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    compile('org.springframework.boot:spring-boot-starter-data-redis') {
+        exclude group: 'io.lettuce'
+    }
+    compile 'redis.clients:jedis'
+    
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
