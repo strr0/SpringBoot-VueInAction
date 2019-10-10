@@ -15,6 +15,9 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-cache'
-    implementation 'net.sf.ehcache:ehcache'
+    compile('org.springframework.boot:spring-boot-starter-data-redis') {
+        exclude group: 'io.lettuce'
+    }
+    compile 'redis.clients:jedis'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
