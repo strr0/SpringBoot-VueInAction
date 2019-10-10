@@ -1,6 +1,0 @@
-spring:
-  datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql:///sampledb?serverTimezone=GMT
-    username: root
-    password: password
