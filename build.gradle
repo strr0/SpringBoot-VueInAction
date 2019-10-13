@@ -13,8 +13,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-freemarker'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
     compile('org.springframework.boot:spring-boot-starter-data-redis') {
         exclude group: 'io.lettuce'
     }
