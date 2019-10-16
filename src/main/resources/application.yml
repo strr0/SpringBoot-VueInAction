@@ -8,7 +8,7 @@ spring:
         - 8004
         - 8005
         - 8006
-      host: 192.168.197.130
+      host: 192.168.197.129
       poolConfig:
         max-total: 6
         max-idle: 6
