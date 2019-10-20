@@ -117,7 +117,9 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http
+/*
+                .authorizeRequests()
                 .antMatchers("/admin/**")
                 .hasRole("ADMIN")
                 .antMatchers("/user/**")
@@ -127,6 +129,7 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
+*/
                 .formLogin()
                 //.loginPage("login_page")
                 .loginProcessingUrl("/login")
@@ -134,7 +137,7 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("passwd")
                 .successHandler(authenticationSuccessHandler())
                 .failureHandler(authenticationFailureHandler())
-                .permitAll()
+                //.permitAll()
                 .and()
                 .logout()
                 .logoutUrl("/logout")
