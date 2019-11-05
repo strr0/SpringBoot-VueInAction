@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql:///testdb?serverTimezone=GMT
+    username: root
+    password: password
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml

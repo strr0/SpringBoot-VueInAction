@@ -20,7 +20,7 @@ public class HelloController {
         return service.user();
     }
 
-    @GetMapping("/dba/hello")
+    @GetMapping("/db/hello")
     public String dba() {
         return service.dba();
     }

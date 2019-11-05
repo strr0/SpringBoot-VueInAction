@@ -1,15 +1,14 @@
 package com.example.demo.entity;
 
-public class Book {
+public class Role {
     private Integer id;
     private String name;
-    private String author;
+    private String nameZh;
 
-    public Book() {}
-    public Book(Integer id, String name, String author) {
-        this.id = id;
+    public Role() {}
+    public Role(String name, String nameZh) {
         this.name = name;
-        this.author = author;
+        this.nameZh = nameZh;
     }
 
     public void setId(Integer id) {
@@ -24,10 +23,10 @@ public class Book {
     public String getName() {
         return name;
     }
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setNameZh(String nameZh) {
+        this.nameZh = nameZh;
     }
-    public String getAuthor() {
-        return author;
+    public String getNameZh() {
+        return nameZh;
     }
 }

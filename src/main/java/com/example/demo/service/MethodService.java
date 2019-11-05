@@ -6,17 +6,17 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MethodService {
-    @Secured("ROLE_ADMIN")
+    //@Secured("ROLE_admin")
     public String admin() {
         return "Hello ADMIN";
     }
 
-    @PreAuthorize("hasRole('ADMIN') and hasRole('DBA')")
+    //@PreAuthorize("hasRole('admin') and hasRole('dba')")
     public String dba() {
         return "Hello DBA";
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'DBA', 'USER')")
+    //@PreAuthorize("hasAnyRole('admin', 'dba', 'user')")
     public String user() {
         return "Hello USER";
     }

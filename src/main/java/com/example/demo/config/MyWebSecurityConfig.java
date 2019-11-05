@@ -1,9 +1,12 @@
 package com.example.demo.config;
 
+import com.example.demo.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.*;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -11,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
@@ -26,21 +30,20 @@ import java.util.Map;
 
 @Configuration
 public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
+    //@Autowired
+    //private UserService userService;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(10);
     }
-
+/*
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("root").password(passwordEncoder().encode("123456")).roles("ADMIN", "DBA")
-                .and()
-                .withUser("admin").password(passwordEncoder().encode("123456")).roles("ADMIN", "USER")
-                .and()
-                .withUser("strr").password(passwordEncoder().encode("123456")).roles("USER");
+        auth.userDetailsService(userService);
     }
-
+*/
+/*
     @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler() {
         return new AuthenticationSuccessHandler() {
@@ -114,7 +117,7 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
             }
         };
     }
-
+*/
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -130,6 +133,7 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .and()
 */
+/*
                 .formLogin()
                 //.loginPage("login_page")
                 .loginProcessingUrl("/login")
@@ -148,5 +152,29 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf()
                 .disable();
+*/
+                .authorizeRequests()
+                .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
+                    @Override
+                    public <O extends FilterSecurityInterceptor> O postProcess(O object) {
+                        object.setSecurityMetadataSource(cfisms());
+                        object.setAccessDecisionManager(cadm());
+                        return object;
+                    }
+                })
+                .and()
+                .formLogin()
+                .loginProcessingUrl("/login").permitAll()
+                .and()
+                .csrf().disable();
+
+    }
+    @Bean
+    CustomFilterInvocationSecurityMetadataSource cfisms() {
+        return new CustomFilterInvocationSecurityMetadataSource();
+    }
+    @Bean
+    CustomAccessDecisionManager cadm() {
+        return new CustomAccessDecisionManager();
     }
 }
