@@ -6,6 +6,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import java.io.File;
 
@@ -14,6 +16,8 @@ import java.io.File;
 public class DemoApplicationTests {
     @Autowired
     private MailService mailService;
+    @Autowired
+    private TemplateEngine templateEngine;
 
     @Test
     public void sendSimpleMail() {
@@ -44,6 +48,18 @@ public class DemoApplicationTests {
                 new String[]{"",
                         ""},
                 new String[]{"p01", "p02"});
+    }
+
+    @Test
+    public void sendHtmlMail() {
+        Context ctx = new Context();
+        ctx.setVariable("username", "strr");
+        ctx.setVariable("gender", "女");
+        String mail = templateEngine.process("mailtemplate.html", ctx);
+        mailService.sendHtmlMail("",
+                "",
+                "测试邮件主题",
+                mail);
     }
 
 }

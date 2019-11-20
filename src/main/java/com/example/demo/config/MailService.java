@@ -65,4 +65,20 @@ public class MailService {
             m.printStackTrace();
         }
     }
+
+    public void sendHtmlMail(String from, String to, String subject, String content) {
+        try{
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+            helper.setFrom(from);
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(content, true);
+            javaMailSender.send(mimeMessage);
+        }
+        catch (MessagingException m) {
+            System.out.println("发送失败");
+            m.printStackTrace();
+        }
+    }
 }
