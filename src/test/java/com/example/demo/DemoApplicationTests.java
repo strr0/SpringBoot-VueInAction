@@ -1,6 +1,9 @@
 package com.example.demo;
 
 import com.example.demo.config.MailService;
+import com.example.demo.entity.User;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
+import java.io.StringWriter;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -44,6 +48,26 @@ public class DemoApplicationTests {
                 new String[]{"",
                         ""},
                 new String[]{"p01", "p02"});
+    }
+
+    @Test
+    public void sendHtmlMail() {
+        try{
+            Configuration configuration = new Configuration(Configuration.VERSION_2_3_0);
+            ClassLoader loader = DemoApplication.class.getClassLoader();
+            configuration.setClassLoaderForTemplateLoading(loader, "templates");
+            Template template = configuration.getTemplate("mailtemplate.ftl");
+            StringWriter mail = new StringWriter();
+            User user = new User("strr", "女");
+            template.process(user, mail);
+            mailService.sendHtmlMail("",
+                    "",
+                    "测试邮件主题",
+                    mail.toString());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
