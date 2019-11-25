@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: password
+    url: jdbc:mysql:///testdb1?serverTimezone=UTC
+    schema: classpath:/org/springframework/batch/core/schema-mysql.sql
+
+  batch:
+    initialize-schema: always
+    job:
+      enabled: false
