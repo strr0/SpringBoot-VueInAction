@@ -1,0 +1,18 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+  endpoint:
+    health:
+      show-details: when_authorized
+      roles: ADMIN
+
+  health:
+    defaults:
+      enabled: false
+    status:
+      order: FATAL, DOWN, OUT_OF_SERVICE, UP, UNKNOWN
+      http-mapping:
+        FATAL: 503
