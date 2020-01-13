@@ -1,8 +1,11 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class Menu {
+public class Menu implements Serializable {
     private Integer id;
     private String url;
     private String path;
@@ -20,12 +23,14 @@ public class Menu {
     public void setId(Integer id) {
         this.id = id;
     }
+    @JsonIgnore
     public Integer getId() {
         return id;
     }
     public void setUrl(String url) {
         this.url = url;
     }
+    @JsonIgnore
     public String getUrl() {
         return url;
     }
@@ -68,6 +73,7 @@ public class Menu {
     public void setParentId(Integer parentId) {
         this.parentId = parentId;
     }
+    @JsonIgnore
     public Integer getParentId() {
         return parentId;
     }
@@ -81,6 +87,7 @@ public class Menu {
     public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
+    @JsonIgnore
     public List<Role> getRoles() {
         return roles;
     }
