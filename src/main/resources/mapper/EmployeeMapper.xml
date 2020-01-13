@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.EmployeeMapper">
+    <resultMap id="BasicResultMap" type="com.example.demo.entity.Employee">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="gender" column="gender" />
+        <result property="birthday" column="birthday" />
+        <result property="idCard" column="idCard" />
+        <result property="wedlock" column="wedlock" />
+        <result property="nationId" column="nationId" />
+        <result property="nationName" column="nationName" />
+        <result property="nativePlace" column="nativePlace" />
+        <result property="politicId" column="politicId" />
+        <result property="politicName" column="politicName" />
+        <result property="email" column="email" />
+        <result property="phone" column="phone" />
+        <result property="address" column="address" />
+        <result property="departmentId" column="departmentId" />
+        <result property="departmentName" column="departmentName" />
+        <result property="jobLevelId" column="jobLevelId" />
+        <result property="jobLevelName" column="jobLevelName" />
+        <result property="posId" column="posId" />
+        <result property="posName" column="posName" />
+        <result property="engageForm" column="engageForm" />
+        <result property="tiptopDegree" column="tiptopDegree" />
+        <result property="specialty" column="specialty" />
+        <result property="school" column="school" />
+        <result property="beginDate" column="beginDate" />
+        <result property="workState" column="workState" />
+        <result property="workId" column="workId" />
+        <result property="contractTerm" column="contractTerm" />
+        <result property="conversionTime" column="conversionTime" />
+        <result property="notWorkDate" column="notWorkDate" />
+        <result property="beginContract" column="beginContract" />
+        <result property="endContract" column="endContract" />
+        <result property="workAge" column="workAge" />
+    </resultMap>
+
+    <select id="getEmployeeById" parameterType="int" resultMap="BasicResultMap">
+        select e.*, n.name as nationName, ps.name as politicName, d.name as departmentName,
+        j.name as jobLevelName, p.name as posName
+        from employee e, nation n, political_status ps, department d, jobLevel j, position p
+        where e.nationId = n.id and e.politicId = ps.id and e.departmentId = d.id and
+        e.jobLevelId = j.id and e.posId = p.id and e.id = #{id}
+    </select>
+    <select id="getEmployeeByPage" resultMap="BasicResultMap">
+        select e.*, n.name as nationName, ps.name as politicName, d.name as departmentName,
+        j.name as jobLevelName, p.name as posName
+        from employee e, nation n, political_status ps, department d, jobLevel j, position p
+        where e.nationId = n.id and e.politicId = ps.id and e.departmentId = d.id and
+        e.jobLevelId = j.id and e.posId = p.id
+        <if test="emp.nationId != null">
+            and e.nationId = #{emp.nationId}
+        </if>
+        <if test="emp.politicId != null">
+            and e.politicId = #{emp.politicId}
+        </if>
+        <if test="emp.departmentId != null">
+            and e.departmentId = #{emp.departmentId}
+        </if>
+        <if test="emp.jobLevelId != null">
+            and e.jobLevelId = #{emp.jobLevelId}
+        </if>
+        <if test="emp.posId != null">
+            and e.posId = #{emp.posId}
+        </if>
+        <if test="emp.engageForm != null and emp.engageForm!=''">
+            and e.engageForm = #{emp.engageForm}
+        </if>
+        <if test="beginDateScope != null">
+            and e.beginDate between #{beginDateScope[0]} and #{beginDateScope[1]}
+        </if>
+        <if test="page != null and size != null">
+            limit #{page},#{size}
+        </if>
+    </select>
+    <select id="getTotal" resultType="java.lang.Integer">
+        select count(*) from employee e
+        <where>
+            <if test="emp.nationId != null">
+                and e.nationId = #{emp.nationId}
+            </if>
+            <if test="emp.politicId != null">
+                and e.politicId = #{emp.politicId}
+            </if>
+            <if test="emp.departmentId != null">
+                and e.departmentId = #{emp.departmentId}
+            </if>
+            <if test="emp.jobLevelId != null">
+                and e.jobLevelId = #{emp.jobLevelId}
+            </if>
+            <if test="emp.posId != null">
+                and e.posId = #{emp.posId}
+            </if>
+            <if test="emp.engageForm != null and emp.engageForm!=''">
+                and e.engageForm = #{emp.engageForm}
+            </if>
+            <if test="beginDateScope != null">
+                and e.beginDate between #{beginDateScope[0]} and #{beginDateScope[1]}
+            </if>
+        </where>
+    </select>
+</mapper>

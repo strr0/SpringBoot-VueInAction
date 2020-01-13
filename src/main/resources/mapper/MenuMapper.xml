@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.MenuMapper">
+    <resultMap id="BasicResultMap" type="com.example.demo.entity.Menu">
+        <id property="id" column="id" />
+        <result property="url" column="url" />
+        <result property="path" column="path" />
+        <result property="component" column="component" />
+        <result property="name" column="name" />
+        <result property="iconCls" column="iconCls" />
+        <result property="keepAlive" column="keepAlive" />
+        <result property="requireAuth" column="requireAuth" />
+        <result property="parentId" column="parentId" />
+        <result property="enabled" column="enabled" />
+        <collection property="roles" ofType="com.example.demo.entity.Role">
+            <id property="id" column="rid" />
+            <result property="name" column="rname" />
+            <result property="nameZh" column="rnameZh" />
+        </collection>
+        <collection property="children" ofType="com.example.demo.entity.Menu">
+            <id property="id" column="id2" />
+            <result property="url" column="url2" />
+            <result property="path" column="path2" />
+            <result property="component" column="component2" />
+            <result property="name" column="name2" />
+            <result property="iconCls" column="iconCls2" />
+            <result property="keepAlive" column="keepAlive2" />
+            <result property="requireAuth" column="requireAuth2" />
+            <result property="parentId" column="parentId2" />
+            <result property="enabled" column="enabled2" />
+        </collection>
+    </resultMap>
+
+    <select id="getAllMenus" resultMap="BasicResultMap">
+        select m.*, r.id as rid, r.name as rname, r.nameZh as rnameZh
+        from menu m left join role_menu rm on m.id = rm.mid
+        left join role r on rm.rid = r.id
+        where m.enabled = true
+    </select>
+    <select id="getMenusByUserId" parameterType="int" resultMap="BasicResultMap">
+        select m1.*, m2.id as id2, m2.url as url2, m2.path as path2, m2.component as component2,
+        m2.name as name2, m2.iconCls as iconCls2, m2.keepAlive as keepAlive2, m2.requireAuth as requireAuth2,
+        m2.parentId as parentId2, m2.enabled as enabled2
+        from menu m1, menu m2
+        where m1.id = m2.parentId
+        and m1.id != 1
+        and m2.id in(
+          select rm.mid
+          from user_role ur, role_menu rm
+          where ur.rid = rm.rid
+          and ur.uid = #{id})
+    </select>
+</mapper>

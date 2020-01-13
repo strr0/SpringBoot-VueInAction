@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.UserMapper">
+    <resultMap id="BasicResultMap" type="com.example.demo.entity.User">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="phone" column="phone" />
+        <result property="telephone" column="telephone" />
+        <result property="address" column="address" />
+        <result property="enabled" column="enabled" />
+        <result property="username" column="username" />
+        <result property="password" column="password" />
+        <result property="userface" column="userface" />
+        <result property="remark" column="remark" />
+        <collection property="roles" ofType="com.example.demo.entity.Role">
+            <id property="id" column="rid" />
+            <result property="name" column="rname" />
+            <result property="nameZh" column="rnameZh" />
+        </collection>
+    </resultMap>
+
+
+    <insert id="addUser" parameterType="com.example.demo.entity.User">
+        insert into user(name, phone, telephone, address, enabled, username, password, userface, remark)
+        values(#{name}, #{phone}, #{telephone}, #{address}, #{enabled},
+        #{username}, #{password}, #{userface}, #{remark})
+    </insert>
+    <select id="getUserByUsername" parameterType="string" resultMap="BasicResultMap">
+        select u.*, r.id as rid, r.name as rname, r.nameZh as rnameZh
+        from user u
+        left join user_role ur on u.id = ur.uid
+        left join role r on ur.rid = r.id
+        where u.username = #{username}
+    </select>
+</mapper>
