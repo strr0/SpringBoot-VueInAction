@@ -1,12 +1,7 @@
 package com.example.demo;
 
-import com.example.demo.entity.Employee;
-import com.example.demo.entity.Menu;
-import com.example.demo.entity.Role;
-import com.example.demo.entity.User;
-import com.example.demo.mapper.EmployeeMapper;
-import com.example.demo.mapper.MenuMapper;
-import com.example.demo.mapper.UserMapper;
+import com.example.demo.entity.*;
+import com.example.demo.mapper.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,6 +20,16 @@ public class DemoApplicationTests {
     private MenuMapper menuMapper;
     @Resource
     private EmployeeMapper employeeMapper;
+    @Resource
+    private PoliticMapper politicMapper;
+    @Resource
+    private DepartmentMapper departmentMapper;
+    @Resource
+    private JobLevelMapper jobLevelMapper;
+    @Resource
+    private NationMapper nationMapper;
+    @Resource
+    private PositionMapper positionMapper;
 
     @Test
     public void addUserTest() {
@@ -75,6 +80,7 @@ public class DemoApplicationTests {
     public void getEmployeeTest() {
         //Employee employee = employeeMapper.getEmployeeById(2);
         //System.out.println(employee.getDepartmentName());
+        /*
         Employee employee = new Employee();
         employee.setDepartmentId(6);
         employee.setJobLevelId(3);
@@ -82,6 +88,57 @@ public class DemoApplicationTests {
         List<Employee> employees = employeeMapper.getEmployeeByPage(null, null, employee, null);
         System.out.println("size: " + employees.size());
         System.out.println("name: " + employees.get(0).getName());
+        */
+        Employee employee = employeeMapper.getEmployeeById(5);
+        employee.setId(null);
+        employee.setName("QAQ");
+        Integer result = employeeMapper.addEmployee(employee);
+        System.out.println(result);
     }
 
+    @Test
+    public void deleteEmployeeTest() {
+        int result = employeeMapper.deleteEmployee(501);
+        System.out.println(result);
+    }
+
+    @Test
+    public void getPoliticTest() {
+        List<Politic> politics = politicMapper.getAllPolitics();
+        for(Politic politic : politics) {
+            System.out.println(politic.getName());
+        }
+    }
+
+    @Test
+    public void getDepartmentTest() {
+        List<Department> departments = departmentMapper.getAllDepartments();
+        for(Department department : departments) {
+            System.out.println(department.getName());
+        }
+    }
+
+    @Test
+    public void getJobLevelTest() {
+        List<JobLevel> jobLevels = jobLevelMapper.getAllJobLevels();
+        for(JobLevel jobLevel : jobLevels) {
+            System.out.println(jobLevel.getName());
+        }
+    }
+
+    @Test
+    public void getNationTest() {
+        List<Nation> nations = nationMapper.getAllNations();
+        for(Nation nation : nations) {
+            System.out.println(nation.getName());
+        }
+    }
+
+    @Test
+    public void getPositionTest() {
+        List<Position> positions = positionMapper.getAllPositions();
+        for(Position position : positions) {
+            System.out.println(position.getName());
+        }
+    }
 }
