@@ -32,7 +32,7 @@ public class Employee {
     private String workId;
     private Double contractTerm;
     private Date conversionTime;
-    private Date noWorkDate;
+    private Date notWorkDate;
     private Date beginContract;
     private Date endContract;
     private Integer workAge;
@@ -211,11 +211,11 @@ public class Employee {
     public Date getConversionTime() {
         return conversionTime;
     }
-    public void setNoWorkDate(Date noWorkDate) {
-        this.noWorkDate = noWorkDate;
+    public void setNotWorkDate(Date notWorkDate) {
+        this.notWorkDate = notWorkDate;
     }
-    public Date getNoWorkDate() {
-        return noWorkDate;
+    public Date getNotWorkDate() {
+        return notWorkDate;
     }
     public void setBeginContract(Date beginContract) {
         this.beginContract = beginContract;
