@@ -14,4 +14,9 @@ public interface EmployeeMapper {
                                      @Param("emp") Employee employee,
                                      @Param("beginDateScope") Date[] beginDateScope);
     Integer getTotal(@Param("emp") Employee employee, @Param("beginDateScope") Date[] beginDateScope);
+    Integer getMaxWorkId();
+
+    int addEmployee(Employee employee);
+    int editEmployee(Employee employee);
+    int deleteEmployee(Integer id);
 }
